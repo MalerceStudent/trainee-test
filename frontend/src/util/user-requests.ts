@@ -1,7 +1,7 @@
 import { User } from "@/types/user";
 
 export async function signIn({ email, password }: { email: string, password: string }) {
-    const res = await fetch(`http://localhost:3001/users/signin`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/signin`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -20,7 +20,7 @@ export async function signIn({ email, password }: { email: string, password: str
   }
   
   export async function signUp({ email, password }: { email: string, password: string }) {
-    const res = await fetch(`http://localhost:3001/users/signup`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/signup`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -40,7 +40,7 @@ export async function signIn({ email, password }: { email: string, password: str
   
   export async function fetchProfile(token: string): Promise<User> {
     console.log(token, "fetch")
-  const res = await fetch("http://localhost:3001/users/profile", {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/profile`, {
     headers: { Authorization: `Bearer ${token}` },
   });
 

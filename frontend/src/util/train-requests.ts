@@ -2,7 +2,7 @@ import { Train } from '@/types/train';
 import { QueryClient } from '@tanstack/react-query';
 
 export async function fetchAllTrains({ signal, token }: { signal?: AbortSignal, token: string }) {
-    const response = await fetch(`http://localhost:3001/trains`, 
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trains`, 
     { 
         headers: { Authorization: `Bearer ${token}` },
         signal 
@@ -21,7 +21,7 @@ export async function fetchAllTrains({ signal, token }: { signal?: AbortSignal, 
 }
 
 export async function fetchTrainById({ signal, id, token }: { signal?: AbortSignal, id: string, token: string }) {
-    const response = await fetch(`http://localhost:3001/trains/${id}`, { 
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trains/${id}`, { 
         headers: { Authorization: `Bearer ${token}` },
         signal 
     });
@@ -39,7 +39,7 @@ export async function fetchTrainById({ signal, id, token }: { signal?: AbortSign
 }
 
 export async function createTrain(train: Train, token: string) {
-    const response = await fetch("http://localhost:3001/trains", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trains`, {
         method: "POST",
         headers: { 
             "Content-Type": "application/json",
@@ -52,7 +52,7 @@ export async function createTrain(train: Train, token: string) {
 }
 
 export async function updateTrain(id: string, train: Train, token: string) {
-    const res = await fetch(`http://localhost:3001/trains/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trains/${id}`, {
       method: "PATCH",
       headers: { 
         "Content-Type": "application/json",
@@ -66,10 +66,11 @@ export async function updateTrain(id: string, train: Train, token: string) {
 }
 
 export async function deleteTrain(id: string, token: string) {
-    const res = await fetch(`http://localhost:3001/trains/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trains/${id}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });
     if (!res.ok) throw new Error("Failed to delete train");
     return true;
 }
+
