@@ -27,16 +27,32 @@ export default function TrainForm({ train, onSave }: TrainFormProps) {
   const validate = () => {
     const newErrors: { [key: string]: string } = {};
     const fields = ["number", "name", "from", "to", "departure", "arrival"];
-
+  
+    // Базова перевірка на порожні значення
     fields.forEach((field) => {
       if (!formData[field as keyof typeof formData].trim()) {
         newErrors[field] = `${field} cannot be empty or spaces only`;
       }
     });
-
+  
+    // Перевірка From != To
+    if (formData.from.trim() && formData.to.trim() && formData.from === formData.to) {
+      newErrors.to = `"To" station must be different from "From" station`;
+    }
+  
+    // Перевірка Departure < Arrival
+    if (formData.departure && formData.arrival) {
+      const depTime = new Date(formData.departure);
+      const arrTime = new Date(formData.arrival);
+      if (depTime >= arrTime) {
+        newErrors.arrival = `"Arrival" must be later than "Departure"`;
+      }
+    }
+  
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
+  
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
