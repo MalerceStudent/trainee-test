@@ -1,0 +1,41 @@
+### Отримати всі поїзди
+GET http://localhost:3001/trains
+Accept: application/json
+
+###
+
+### Отримати поїзд за ID
+GET http://localhost:3001/trains/1
+Accept: application/json
+
+###
+
+### Створити новий поїзд
+POST http://localhost:3001/trains
+Content-Type: application/json
+
+{
+  "number": "705",
+  "name": "Intercity",
+  "from": "Kyiv",
+  "to": "Lviv",
+  "departure": "14:00",
+  "arrival": "18:30"
+}
+
+###
+
+### Оновити поїзд за ID
+PATCH http://localhost:3001/trains/1
+Content-Type: application/json
+
+{
+  "name": "Express Intercity",
+  "departure": "15:00"
+}
+
+###
+
+### Видалити поїзд за ID
+DELETE http://localhost:3001/trains/4
+Accept: application/json

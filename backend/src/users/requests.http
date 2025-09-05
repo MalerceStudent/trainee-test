@@ -1,0 +1,24 @@
+### Отримати всіх юзерів
+GET http://localhost:3001/users
+
+###
+
+### Зареєструвати юзера
+POST http://localhost:3001/users/signup
+Content-Type: application/json
+
+{
+  "email": "test@gmail.com",
+  "password": "11223344"
+}
+
+###
+
+### Логін юзера
+POST http://localhost:3001/users/signin
+Content-Type: application/json
+
+{
+  "email": "test@gmail.com",
+  "password": "11223344"
+}
