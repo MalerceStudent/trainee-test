@@ -1,5 +1,10 @@
 import { User } from "@/types/user";
 
+interface FetchError extends Error {
+  code?: number;
+  info?: unknown;
+}
+
 export async function signIn({ email, password }: { email: string, password: string }) {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/signin`, {
       method: "POST",
@@ -10,7 +15,7 @@ export async function signIn({ email, password }: { email: string, password: str
     const data = await res.json();
   
     if (!res.ok) {
-      const error = new Error('Failed to signin') as any;
+      const error = new Error('Failed to signin') as FetchError;
       error.code = res.status;
       error.info = data;
       throw error;
@@ -29,7 +34,7 @@ export async function signIn({ email, password }: { email: string, password: str
     const data = await res.json();
   
     if (!res.ok) {
-      const error = new Error('Failed to signup') as any;
+      const error = new Error('Failed to signup') as FetchError;
       error.code = res.status;
       error.info = data;
       throw error;
@@ -46,7 +51,7 @@ export async function signIn({ email, password }: { email: string, password: str
 
   if (!res.ok) {
     const data = await res.json().catch(() => ({}));
-    const error = new Error(data.message || "Unauthorized") as any;
+    const error = new Error(data.message || "Unauthorized") as FetchError;
     error.code = res.status;
     throw error;
   }

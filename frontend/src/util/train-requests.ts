@@ -1,6 +1,11 @@
 import { Train } from '@/types/train';
 import { QueryClient } from '@tanstack/react-query';
 
+interface FetchError extends Error {
+  code?: number;
+  info?: unknown;
+}
+
 export async function fetchAllTrains({ signal, token }: { signal?: AbortSignal, token: string }) {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trains`, 
     { 
@@ -9,7 +14,7 @@ export async function fetchAllTrains({ signal, token }: { signal?: AbortSignal, 
     });
   
     if (!response.ok) {
-      const error = new Error('An error occurred while fetching trains') as any;
+      const error = new Error('An error occurred while fetching trains') as FetchError;
       error.code = response.status;
       error.info = await response.json();
       throw error;
@@ -27,7 +32,7 @@ export async function fetchTrainById({ signal, id, token }: { signal?: AbortSign
     });
   
     if (!response.ok) {
-      const error = new Error('An error occurred while fetching train') as any;
+      const error = new Error('An error occurred while fetching train') as FetchError;
       error.code = response.status;
       error.info = await response.json();
       throw error;
