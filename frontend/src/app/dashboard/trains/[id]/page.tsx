@@ -107,6 +107,7 @@ export default function TrainDetailsPage({ params }: TrainDetailsPageProps) {
       <Modal isOpen={isEditOpen} onClose={() => setIsEditOpen(false)}>
         <h2 className="text-xl font-semibold mb-4">Edit Train</h2>
         <TrainForm train={train} onSave={handleSave} />
+        {updateMutation.isPending && <p>Loading...</p>}
       </Modal>
 
       {/* Delete confirm modal*/}

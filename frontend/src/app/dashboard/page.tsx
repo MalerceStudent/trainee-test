@@ -8,6 +8,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { createTrain, fetchAllTrains } from "@/util/train-requests";
 import { Train } from "@/types/train";
 import { useAuthContext } from "@/context/AuthContext";
+import { matchesSearchTerm } from "@/util/matches-search ";
 
 export default function DashboardPage() {
   const [isOpen, setIsOpen] = useState(false);
@@ -42,31 +43,7 @@ export default function DashboardPage() {
   };
 
   // фільтруємо потяги по пошуковому запиту
-  const filteredTrains = data?.filter((train: Train) => {
-    const term = searchTerm.toLowerCase();
-  
-    // функція для форматування дати
-    const formatDate = (isoString?: string) => {
-      if (!isoString) return "";
-      const date = new Date(isoString);
-      const day = String(date.getDate()).padStart(2, "0");
-      const month = String(date.getMonth() + 1).padStart(2, "0");
-      const year = date.getFullYear();
-      const hours = String(date.getHours()).padStart(2, "0");
-      const minutes = String(date.getMinutes()).padStart(2, "0");
-      return `${day}.${month}.${year} ${hours}:${minutes}`;
-    };
-  
-    return (
-      (train.number?.toLowerCase() ?? "").includes(term) ||
-      (train.name?.toLowerCase() ?? "").includes(term) ||
-      (train.from?.toLowerCase() ?? "").includes(term) ||
-      (train.to?.toLowerCase() ?? "").includes(term) ||
-      formatDate(train.departure).toLowerCase().includes(term) ||
-      formatDate(train.arrival).toLowerCase().includes(term)
-    );
-  });
-  
+  const filteredTrains = data?.filter((train: Train) => matchesSearchTerm(train, searchTerm));
 
   return (
     <div>

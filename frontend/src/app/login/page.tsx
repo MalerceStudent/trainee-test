@@ -74,11 +74,14 @@ export default function LoginPage() {
             <p className="text-red-500 text-sm text-center">{errorMessage}</p>
           )}
 
+          {signupMutation.isPending && <p>Loading...</p>}
+          {signinMutation.isPending && <p>Loading...</p>}
+
           <Button type="submit" full>
             {isSignup ? "Sign Up" : "Sign In"}
           </Button>
         </form>
-
+       
         <p className="text-sm text-center mt-4">
           {isSignup ? "Already have an account?" : "Don't have an account?"}{" "}
           <button
