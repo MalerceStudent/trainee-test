@@ -1,10 +1,8 @@
+import { FetchError } from '@/types/custom-error';
 import { Train } from '@/types/train';
 import { QueryClient } from '@tanstack/react-query';
 
-interface FetchError extends Error {
-  code?: number;
-  info?: unknown;
-}
+
 
 export async function fetchAllTrains({ signal, token }: { signal?: AbortSignal, token: string }) {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/trains`, 

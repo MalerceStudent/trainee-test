@@ -1,10 +1,5 @@
+import { FetchError } from "@/types/custom-error";
 import { User } from "@/types/user";
-
-interface FetchError extends Error {
-  code?: number;
-  info?: unknown;
-}
-
 export async function signIn({ email, password }: { email: string, password: string }) {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/signin`, {
       method: "POST",

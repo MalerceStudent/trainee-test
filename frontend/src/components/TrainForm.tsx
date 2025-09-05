@@ -1,9 +1,10 @@
 import { useState } from "react";
 import Button from "./Button";
+import { Train } from "@/types/train";
 
 interface TrainFormProps {
-  train?: any | null;
-  onSave?: (train: any) => void;
+  train?: Train | null;
+  onSave?: (train: Train) => void;
 }
 
 export default function TrainForm({ train, onSave }: TrainFormProps) {

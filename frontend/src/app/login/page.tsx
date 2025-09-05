@@ -5,6 +5,7 @@ import Button from "@/components/Button";
 import { useMutation } from "@tanstack/react-query";
 import { signIn, signUp } from "@/util/user-requests";
 import { useRouter } from "next/navigation";
+import { FetchError } from "@/types/custom-error";
 
 export default function LoginPage() {
   const [isSignup, setIsSignup] = useState(false);
@@ -20,7 +21,7 @@ export default function LoginPage() {
       localStorage.setItem("token", data.token);
       router.push("/dashboard"); 
     },
-    onError: (err: any) => {
+    onError: (err: FetchError) => {
       setErrorMessage(err.info?.message || "Sign up failed");
     },
   });
@@ -32,7 +33,7 @@ export default function LoginPage() {
       localStorage.setItem("token", data.token);
       router.push("/dashboard"); 
     },
-    onError: (err: any) => {
+    onError: (err: FetchError) => {
       setErrorMessage(err.info?.message || "Sign in failed");
     },
   });
