@@ -8,7 +8,6 @@ interface TrainTableProps {
   trains: Train[];
   pageSize?: number;
 }
-
 export default function TrainTable({ trains, pageSize = 5 }: TrainTableProps) {
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -18,39 +17,42 @@ export default function TrainTable({ trains, pageSize = 5 }: TrainTableProps) {
 
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden">
-      <table className="w-full border-collapse">
-        <thead className="bg-gray-200">
-          <tr>
-            <th className="p-3 text-left">Train Number</th>
-            <th className="p-3 text-left">Train</th>
-            <th className="p-3 text-left">From</th>
-            <th className="p-3 text-left">To</th>
-            <th className="p-3 text-left">Departure</th>
-            <th className="p-3 text-left">Arrival</th>
-            <th className="p-3 text-center">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentTrains.map((train) => (
-            <tr key={train.id} className="border-t">
-              <td className="p-3">{train.number}</td>
-              <td className="p-3">{train.name}</td>
-              <td className="p-3">{train.from}</td>
-              <td className="p-3">{train.to}</td>
-              <td className="p-3">{formatDateTime(train.departure)}</td>
-              <td className="p-3">{formatDateTime(train.arrival)}</td>
-              <td className="p-3 text-center">
-                <Link
-                  href={`/dashboard/trains/${train.id}`}
-                  className="text-blue-500 hover:underline"
-                >
-                  View
-                </Link>
-              </td>
+      {/* Обгортка для горизонтального скролу */}
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse min-w-[700px]">
+          <thead className="bg-gray-200">
+            <tr>
+              <th className="p-3 text-left">Train Number</th>
+              <th className="p-3 text-left">Train</th>
+              <th className="p-3 text-left">From</th>
+              <th className="p-3 text-left">To</th>
+              <th className="p-3 text-left">Departure</th>
+              <th className="p-3 text-left">Arrival</th>
+              <th className="p-3 text-center">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {currentTrains.map((train) => (
+              <tr key={train.id} className="border-t">
+                <td className="p-3">{train.number}</td>
+                <td className="p-3">{train.name}</td>
+                <td className="p-3">{train.from}</td>
+                <td className="p-3">{train.to}</td>
+                <td className="p-3">{formatDateTime(train.departure)}</td>
+                <td className="p-3">{formatDateTime(train.arrival)}</td>
+                <td className="p-3 text-center">
+                  <Link
+                    href={`/dashboard/trains/${train.id}`}
+                    className="text-blue-500 hover:underline"
+                  >
+                    View
+                  </Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {/* пагінація */}
       <div className="flex justify-center items-center gap-2 p-4">

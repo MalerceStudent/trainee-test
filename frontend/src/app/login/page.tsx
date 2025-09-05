@@ -19,7 +19,7 @@ export default function LoginPage() {
     onSuccess: (data) => {
       setErrorMessage("");
       localStorage.setItem("token", data.token);
-      router.push("/dashboard"); 
+      router.push("/dashboard");
     },
     onError: (err: FetchError) => {
       setErrorMessage(err.info?.message || "Sign up failed");
@@ -31,7 +31,7 @@ export default function LoginPage() {
     onSuccess: (data) => {
       setErrorMessage("");
       localStorage.setItem("token", data.token);
-      router.push("/dashboard"); 
+      router.push("/dashboard");
     },
     onError: (err: FetchError) => {
       setErrorMessage(err.info?.message || "Sign in failed");
@@ -48,9 +48,9 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-[80vh]">
-      <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-4 text-center">
+    <div className="min-h-screen flex justify-center items-center bg-white text-gray-900">
+      <div className="w-full max-w-md p-8 rounded-xl shadow-md bg-white text-gray-900">
+        <h1 className="text-2xl font-bold mb-6 text-center">
           {isSignup ? "Sign Up" : "Sign In"}
         </h1>
 
@@ -58,30 +58,33 @@ export default function LoginPage() {
           <input
             type="email"
             placeholder="Email"
-            className="w-full p-2 border rounded"
+            className="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
           <input
             type="password"
             placeholder="Password"
-            className="w-full p-2 border rounded"
+            className="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            required
           />
 
           {errorMessage && (
             <p className="text-red-500 text-sm text-center">{errorMessage}</p>
           )}
 
-          {signupMutation.isPending && <p>Loading...</p>}
-          {signinMutation.isPending && <p>Loading...</p>}
+          {(signinMutation.isPending || signupMutation.isPending) && (
+            <p className="text-gray-600 text-center">Loading...</p>
+          )}
 
           <Button type="submit" full>
             {isSignup ? "Sign Up" : "Sign In"}
           </Button>
         </form>
-       
+
         <p className="text-sm text-center mt-4">
           {isSignup ? "Already have an account?" : "Don't have an account?"}{" "}
           <button
